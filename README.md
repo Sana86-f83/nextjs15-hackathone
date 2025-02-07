@@ -1,2 +1,0 @@
-# nextjs15-hackathone
- 
