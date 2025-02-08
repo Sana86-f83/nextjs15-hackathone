@@ -3,7 +3,7 @@ import React from "react";
 
 const MainpageChefs = () => {
   return (
-    <div className="h-[730px] w-full  md:w-[1923px] bg-red-400   relative ml-[0px] md:ml-[0px] text-white mt-[950px] md:mt-[120px]">
+    <div className="h-[730px] w-full  md:w-[1923px]   relative ml-[0px] md:ml-[0px] text-white mt-[950px] md:mt-[120px]">
       <Image
         src={"/chefs/Chefs.png"}
         alt="Chefs Image"
