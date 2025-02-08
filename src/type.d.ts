@@ -15,16 +15,16 @@ export type Product = {
     description: string;
     available: boolean;
     slug: string;
-    block: { _type: string; children: { _type: string; text: string }[] };
-    inventory: number;
-  };
+    block?: { _type: string; children: { _type: string; text: string }[] };
+    inventory?: number;
+      };
   
-  export type PageProps = {
-    title: string;
-    description: string;
-  };
+  // export type PageProps = {
+  //   title: string;
+  //   description: string;
+  // };
   
-  export type TEntry = {
-    default: (props: PageProps) => JSX.Element;
-  };
+  // export type TEntry = {
+  //   default: (props: PageProps) => JSX.Element;
+  // };
   

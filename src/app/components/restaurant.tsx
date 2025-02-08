@@ -64,7 +64,7 @@ const Restaurant = () => {
   }
 
   return (
-    <div className="relative w-[1920px] h-[830px] -mt-[120px] bg-black">
+    <div className="relative w-[1920px] h-[730px] -mt-[120px] bg-black">
       {/* HERO DIV */}
       <div className="hidden lg:flex w-full h-auto lg:h-[818px] lg:w-[1920px] absolute ">
         <Image

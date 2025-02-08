@@ -4,7 +4,6 @@ import Navbar2 from "@/app/components/Navbar2";
 import ShopImages from "@/app/components/shopimagediv";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/type";
-import { PortableText } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 // For a dynamic page component
@@ -264,7 +263,8 @@ export default function Slug({ params }: { params: { slug: string } }) {
           <p className="mt-[13px] ml-[24px]">Reviews (24)</p>
 
           <section className="w-[1300px] h-[72px] absolute mt-[82px] tracking-wide">
-            <PortableText value={data.block} />{" "}
+            {data.description}
+            {/* <PortableText value={data.block} />{" "} */}
           </section>
           <div className="w-[476px] h-[184px] mt-[274px] absolute text-[18px] ">
             Key Benefits

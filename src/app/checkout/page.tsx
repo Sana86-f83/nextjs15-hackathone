@@ -43,10 +43,12 @@ export default function CheckoutPage() {
   }, []);
 
   const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.inventory,
+    (total, item) => total + item.price * (item.inventory ?? 0),
     0
   );
-  const total = Math.max(subtotal - discount, 0);
+
+  // Calculate the total after discount
+  const total = Math.max(subtotal - discount, 0); // Ensure total is not negative
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
@@ -175,11 +177,13 @@ export default function CheckoutPage() {
                     <div className="flex-1">
                       <h3 className="text-sm font-medium">{item.name}</h3>
                       <p className="text-xs text-gray-500">
-                        Quantity: {item.inventory}
+                        Quantity: {item.inventory ?? 0}{" "}
+                        {/* Default to 0 if inventory is undefined */}
                       </p>
                     </div>
                     <p className="text-sm font-medium">
-                      ${item.price * item.inventory}
+                      ${((item.price ?? 0) * (item.inventory ?? 0)).toFixed(2)}{" "}
+                      {/* Default to 0 if price or inventory is undefined */}
                     </p>
                   </div>
                 ))

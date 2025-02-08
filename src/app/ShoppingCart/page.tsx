@@ -1,11 +1,15 @@
-'use client'
+"use client";
 import Navbar2 from "../components/Navbar2";
 import Heading from "../components/headingprops";
 import Image from "next/image";
 import { MdStarRate } from "react-icons/md";
 import { PiCheckSquareOffsetBold } from "react-icons/pi";
 import React, { useEffect, useState } from "react";
-import { getCartItems, removeFromCart, updateCartQuantity } from "../actions/actions";
+import {
+  getCartItems,
+  removeFromCart,
+  updateCartQuantity,
+} from "../actions/actions";
 import Swal from "sweetalert2";
 import { urlFor } from "@/sanity/lib/image";
 import { RiDeleteBin3Fill } from "react-icons/ri";
@@ -48,22 +52,28 @@ const CartPage = () => {
   // Handle Increment
   const handleIncrement = (id: string) => {
     const product = cartItems.find((item) => item._id === id);
-    if (product) handleQuantityChange(id, product.inventory + 1);
+    if (product) {
+      const updatedInventory = (product.inventory ?? 0) + 1; // Default to 0 if inventory is undefined
+      handleQuantityChange(id, updatedInventory);
+    }
   };
-
   // Handle Decrement
   const handleDecrement = (id: string) => {
     const product = cartItems.find((item) => item._id === id);
-    if (product && product.inventory > 1) handleQuantityChange(id, product.inventory - 1);
+    if (product && (product.inventory ?? 0) > 1) {
+      handleQuantityChange(id, (product.inventory ?? 0) - 1);
+    }
   };
 
   // Calculate total price
   const calculatedTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.inventory, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.price * (item.inventory ?? 0),
+      0
+    );
   };
 
-
-  const router = useRouter()
+  const router = useRouter();
   // Handle Proceed function
   const handleProceed = () => {
     Swal.fire({
@@ -81,7 +91,7 @@ const CartPage = () => {
           "Your order has been successfully processed!",
           "success"
         );
-        router.push("/checkout")
+        router.push("/checkout");
         // Clear the cart after proceeding (optional)
         setCartItems([]);
       }
@@ -100,22 +110,32 @@ const CartPage = () => {
               <span className="ml-[360px] w-[58.55px] h-[29px] leading-8 font-bold text-[20px] ">
                 Price
               </span>
-              <span className="w-[94.5px] h-[29px] ml-[147px] font-bold text-[20px] ">Quantity</span>
-              <span className="ml-[159px] w-[55px] h-[29px] font-bold text-[20px]">Total</span>
-              <span className="ml-[140px] w-[121px] h-[29px] font-bold text-[20px] ">Remove</span>
+              <span className="w-[94.5px] h-[29px] ml-[147px] font-bold text-[20px] ">
+                Quantity
+              </span>
+              <span className="ml-[159px] w-[55px] h-[29px] font-bold text-[20px]">
+                Total
+              </span>
+              <span className="ml-[140px] w-[121px] h-[29px] font-bold text-[20px] ">
+                Remove
+              </span>
             </h1>
 
             {cartItems.map((item) => (
-              <div key={item._id} className="w-[1180px] h-[115px] mt-[32px] bg-gray5 shadow-md shadow-slate-500">
+              <div
+                key={item._id}
+                className="w-[1180px] h-[115px] mt-[32px] bg-gray5 shadow-md shadow-slate-500"
+              >
                 <div className="w-[225px] h-[97px]">
                   <div className="w-[93px] h-[97px]">
                     {item.image && (
-                      <Image src={urlFor(item.image).url()}
-                      alt={item.name}
+                      <Image
+                        src={urlFor(item.image).url()}
+                        alt={item.name}
                         className="w-[300x] h-[100px] object-cover rounded-lg "
                         width={300}
                         height={100}
-                        />
+                      />
                     )}
                     <h1 className="w-[153px] h-[24px] text-black absolute -mt-[93px] ml-[100px] ">
                       {item.name}
@@ -138,7 +158,8 @@ const CartPage = () => {
                         -
                       </button>
                       <span className="w-[30px] h-[32px] mt-[6px] ml-[4px] text-center">
-                        {item.inventory} {/* Changed from quantity to inventory */}
+                        {item.inventory}{" "}
+                        {/* Changed from quantity to inventory */}
                       </span>
                       <button
                         onClick={() => handleIncrement(item._id)}
@@ -148,19 +169,19 @@ const CartPage = () => {
                       </button>
                     </div>
                     <p className="w-[65px] h-[24px] ml-[850px] -mt-[34px] ">
-                      ${(item.price * item.inventory).toFixed(2)} {/* Changed from quantity to inventory */}
+                      ${(item.price * (item.inventory ?? 0)).toFixed(2)}{" "}
+                      {/* Ensure inventory is not undefined */}
                     </p>
+
                     <div>
-                    <RiDeleteBin3Fill
-                    onClick={() => handleRemove(item._id)}
-                      className="w-[40px] h-[40px] ml-[1090px] -mt-[36px] text-red-600 text-[48px]"
-                    />
+                      <RiDeleteBin3Fill
+                        onClick={() => handleRemove(item._id)}
+                        className="w-[40px] h-[40px] ml-[1090px] -mt-[36px] text-red-600 text-[48px]"
+                      />
+                    </div>
                   </div>
-                  </div>
-                  </div>
-
-
                 </div>
+              </div>
             ))}
           </div>
         </div>
@@ -171,7 +192,8 @@ const CartPage = () => {
               Coupon Code
             </h1>
             <p className="w-[472px] h-[52px] mt-[48px] text-gray3 tracking-wide ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam pellentesque bibendum non
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+              diam pellentesque bibendum non
             </p>
             <input
               type="text"
@@ -203,9 +225,7 @@ const CartPage = () => {
                   Shipping Cart
                 </h1>
 
-                <h2 className="w-[61px] h-[26px] ml-[407px] ">
-                  $00.00
-                </h2>
+                <h2 className="w-[61px] h-[26px] ml-[407px] ">$00.00</h2>
               </div>
               <hr className="w-[600px] h-[4px] m-auto bg-gray3/10 mt-[24px]" />
               <div className="flex justify-between mt-[15px] bg-black text-white ">
@@ -214,7 +234,7 @@ const CartPage = () => {
                 </h1>
 
                 <h2 className="w-[77px] h-[26px] ml-[407px] text-black/90 text-white px-2">
-                  ${(calculatedTotal()).toFixed(2)}
+                  ${calculatedTotal().toFixed(2)}
                 </h2>
               </div>
             </div>
